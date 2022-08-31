@@ -1,0 +1,10 @@
+@use "../glb" as g;
+
+.p-contact {
+  position: relative;
+}
+
+// reCAPTCHA
+.grecaptcha-badge {
+  visibility: hidden;
+}

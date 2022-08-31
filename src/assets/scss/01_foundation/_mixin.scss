@@ -1,0 +1,230 @@
+@use 'variable';
+@use 'sass:math';
+
+//ブレークポイント
+$breakpoints: (
+  'xxs': 'screen and (max-width: 399px)',
+  'xxs_min': 'screen and (min-width: 400px)',
+  'xs': 'screen and (max-width: 499px)',
+  'xs_min': 'screen and (min-width: 500px)',
+  'sm': 'screen and (max-width: 599px)',
+  'sm_min': 'screen and (min-width: 600px)',
+  'md': 'screen and (max-width: 768px)',
+  'md_min': 'screen and (min-width: 769px)',
+  'lg': 'screen and (max-width: 960px)',
+  'lg_min': 'screen and (min-width: 961px)',
+  'xl': 'screen and (max-width: 1199px)',
+  'xl_min': 'screen and (min-width: 1200px)',
+  'xxl': 'screen and (max-width: 1399px)',
+  'xxl_min': 'screen and (min-width: 1400px)',
+) !default;
+@mixin mq($breakpoint: md) {
+  @media #{map-get($breakpoints, $breakpoint)} {
+    @content;
+  }
+}
+
+//---------------------------------------------
+// フォント
+//---------------------------------------------
+@mixin SourceHanSansJP_Regular {
+  font-family: 'SourceHanSansJP-Regular',YuGothic, '游ゴシック', 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic ProN', メイリオ, Meiryo, 'ＭＳ Ｐゴシック', sans-serif;
+}
+
+//---------------------------------------------
+// レイアウトBOX
+//---------------------------------------------
+
+@mixin f-c {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin f-ac {
+  display: flex;
+  align-items: center;
+}
+
+@mixin f-jc {
+  display: flex;
+  justify-content: center;
+}
+
+//---------------------------------------------
+// マージン中央配置
+//---------------------------------------------
+@mixin marginAuto {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+//---------------------------------------------
+//可変ォントサイズ
+//---------------------------------------------
+
+//初期値：768px～1920px間16px～20pxで可変
+@mixin fs_vw($fs_min: 16, $fs_max: 24,$width_min:768,$width_max:1920) {
+  font-size: calc(
+  (#{$fs_min} * .1rem) + ((1vw - ($width_min / 100) * .1rem)) *
+  (100 * ((#{$fs_max} - #{$fs_min}) / ($width_max - $width_min)))
+  );
+}
+
+//---------------------------------------------
+//トランジション
+//---------------------------------------------
+@mixin transition($transition:o) {
+	@if $transition==o {
+    transition: opacity .3s ease;
+	}
+	@else if $transition==ov {
+    transition: opacity .3s ease,visibility .3s ease;
+	}
+	@else if $transition==cb {
+    transition: color .3s ease,background .3s ease;
+	}
+}
+
+//---------------------------------------------
+//object-fit
+//---------------------------------------------
+@mixin fit($position: center) {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: $position;
+}
+
+//---------------------------------------------
+//キーボードfocus
+//---------------------------------------------
+@mixin focusOutline {
+  // キーボードでfocusした時
+  &:focus-visible {
+    outline: 2px solid #000000;
+  }
+  //クリックした時
+  &:focus:not(:focus-visible) {
+    outline: none;
+  }
+}
+
+//---------------------------------------------
+//hover
+//---------------------------------------------
+@mixin hover {
+  &:focus {
+    @content;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @content;
+    }
+  }
+}
+
+//---------------------------------------------
+//font＆line-height
+//---------------------------------------------
+@mixin fontHeight($fontSize: 1.6rem,$Level: 3) {
+  @if $Level == 1 {
+    font-size: $fontSize;
+    line-height: 1.25;
+  }
+  @else if $Level == 2 {
+    font-size: $fontSize;
+    line-height: 1.5;
+  }
+  @else if $Level == 3 {
+    font-size: $fontSize;
+    line-height: 1.67;
+  }
+  @else if $Level == 4 {
+    font-size: $fontSize;
+    line-height: 1.8;
+  }
+  @else if $Level == 5 {
+    font-size: $fontSize;
+    line-height: 2;
+  }
+}
+
+//---------------------------------------------
+//縦横比固定
+//---------------------------------------------
+@mixin ratio_container($size) {
+  position: relative;
+  &::before {
+    display: block;
+    padding-top: $size;
+    content: '';
+  }
+}
+
+//---------------------------------------------
+// フルサイズabsolute
+//---------------------------------------------
+@mixin absolute_full($key:none) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+	@if $key==fit {
+    object-fit: cover;
+    object-position: center;
+	}
+}
+
+//---------------------------------------------
+// 高さ100vh
+//---------------------------------------------
+@mixin fullHeight {
+  min-height: 100vh;
+  min-height: calc(var(--vh, 1vh) * 100);
+}
+
+//---------------------------------------------
+// 三角形
+//---------------------------------------------
+@mixin triangle($direction, $width, $height, $color){
+	width: 0;
+	height: 0;
+	border-style: solid;
+	$valWidth: calc($width / 2);
+	$valHeight: calc($height / 2);
+	@if ($direction == top) {
+		border-width: 0 $valWidth $height $valWidth;
+		border-color: transparent transparent $color transparent;
+	} @else if ($direction == left) {
+		border-width: $valHeight $width $valHeight 0;
+		border-color: transparent $color transparent transparent;
+	} @else if ($direction == right) {
+		border-width: $valHeight 0 $valHeight $width;
+		border-color: transparent transparent transparent $color;
+	} @else if ($direction == bottom) {
+		border-width: $height $valWidth 0 $valWidth;
+		border-color: $color transparent transparent transparent;
+	}
+}
+
+//---------------------------------------------
+// くの字アイコン
+//---------------------------------------------
+@mixin kunoji($direction,$size,$weight,$color) {
+  width: $size;
+  height: $size;
+  border-style: solid;
+  border-width: $weight;
+  transform: rotate(45deg);
+  @if ($direction == top) {
+    border-color: $color $color transparent transparent;
+	} @else if ($direction == left) {
+    border-color: $color $color transparent transparent;
+	} @else if ($direction == right) {
+    border-color: $color $color transparent transparent;
+	} @else if ($direction == bottom) {
+    border-color: $color $color transparent transparent;
+	}
+}

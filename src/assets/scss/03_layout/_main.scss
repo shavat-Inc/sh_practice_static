@@ -1,0 +1,10 @@
+@use "../glb" as g;
+
+.l-main {
+  position: relative;
+  &__section01 {
+    max-width: 1200px;
+    width: 90%;
+    @include g.marginAuto;
+  }
+}

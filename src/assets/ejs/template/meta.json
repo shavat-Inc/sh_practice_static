@@ -1,0 +1,13 @@
+{
+  "default": {
+    "title": "サイトのタイトル",
+    "description": "サイトのディスクリプション",
+    "canonical": "http://example.com/"
+  },
+
+  "home": {
+    "title": "",
+    "description": "",
+    "canonical": "http://example.com/"
+  }
+}

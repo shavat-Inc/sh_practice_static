@@ -1,0 +1,29 @@
+@use "../glb" as g;
+
+.u-md_sp {
+  @include g.mq(md_min) {
+    display: none !important;
+  }
+}
+
+.u-md_pc {
+  @include g.mq(md) {
+    display: none !important;
+  }
+}
+
+.u-lg_sp {
+  @include g.mq(lg_min) {
+    display: none !important;
+  }
+}
+
+.u-lg_pc {
+  @include g.mq(lg) {
+    display: none !important;
+  }
+}
+
+.u-dib {
+  display: inline-block;
+}

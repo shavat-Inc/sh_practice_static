@@ -1,0 +1,27 @@
+// 基礎
+@use '01_foundation/variable';
+@use '01_foundation/mixin';
+@use '01_foundation/font';
+@use '01_foundation/reset';
+@use '01_foundation/base';
+
+// 外部CSS
+@use '02_external/slick';
+
+// layout
+@use '03_layout/footer';
+@use '03_layout/header';
+@use '03_layout/main';
+@use '03_layout/mv';
+
+// component
+@use '04_component/btn';
+@use '04_component/card';
+
+//project
+@use '05_project/contact';
+@use '05_project/top';
+
+//utility
+@use '06_utility/display';
+@use '06_utility/margin';
