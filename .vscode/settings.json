@@ -1,0 +1,9 @@
+{
+  "dartsass.targetDirectory": "dist/css/",
+  "workbench.editor.closeEmptyGroups": false,
+  "files.associations": {"*.ejs": "html"},
+  "liveServer.settings.root": "/dist/",
+  "path-autocomplete.pathMappings": {
+    "/":"${folder}/dist/"
+  }
+}

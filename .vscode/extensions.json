@@ -1,0 +1,21 @@
+{
+  "recommendations": [
+    "formulahendry.auto-close-tag",
+    "formulahendry.auto-rename-tag",
+    "coenraads.bracket-pair-colorizer-2",
+    "streetsidesoftware.code-spell-checker",
+    "pranaygp.vscode-css-peek",
+    "editorconfig.editorconfig",
+    "digitalbrainstem.javascript-ejs-support",
+    "ecmel.vscode-html-css",
+    "abusaidm.html-snippets",
+    "oderwat.indent-rainbow",
+    "ms-ceintl.vscode-language-pack-ja",
+    "ritwickdey.liveserver",
+    "ionutvmi.path-autocomplete",
+    "bmewburn.vscode-intelephense-client",
+    "esbenp.prettier-vscode",
+    "sibiraj-s.vscode-scss-formatter",
+    "mosapride.zenkaku"
+  ]
+}
