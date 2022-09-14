@@ -1,0 +1,39 @@
+<%- include('./template/_header', { page: json['home'] }); %>
+<div class="form-wrapper">
+  <form
+    action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSdM7QL6u7BuHUIUb1TF8tj0-5-vTjHE2Qd3y_XnScmC-r4JBA/formResponse"
+    id="form">
+    <div class="box">
+      <p class="box">お問い合わせ内容</p>
+      <div class="flex-box"><input type="radio" name="entry.1317330446" required value="scala">
+        <p>オプション１</p>
+      </div>
+      <div class="flex-box"><input type="radio" name="entry.1317330446" required value="kotlin">
+        <p>２</p>
+      </div>
+      <div class="flex-box"><input type="radio" name="entry.1317330446" required value="basic">
+        <p>３</p>
+      </div>
+
+    </div>
+    <div class="box">
+      <label for="name">お名前</label>
+      <input type="text" name="entry.684249631" id="name" placeholder="お名前" required>
+    </div>
+    <div class="box">
+      <label for="mail">メールアドレス</label>
+      <input type="mail" name="entry.292247356" id="mail" placeholder="メールアドレス" required>
+    </div>
+    <div class="box">
+      <label for="phone">電話番号</label>
+      <input type="number" name="entry.1758818329" id="phone" placeholder="お名前" required>
+    </div>
+    <div class="box">
+      <textarea name="entry.105945526" id="" cols="30" rows="10" placeholder="本文"></textarea><!-- /# -->
+    </div>
+    <input type="submit" class="submit-btn">
+  </form>
+  <p class="end-message">お問い合わせありがとうございました</p>
+  <p class="false-message">送信失敗です</p>
+</div>
+<%- include( './template/_footer' ); %>

@@ -1,5 +1,20 @@
 @use '../glb' as g;
 
-.p-top {
-  position: relative;
+.p-canvas {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  @include g.fullHeight;
+}
+
+.test {
+  color: #31c5d8;
+}
+.end-message {
+  display: none;
+}
+
+.false-message {
+  display: none;
 }
