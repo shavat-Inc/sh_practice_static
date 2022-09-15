@@ -9,6 +9,7 @@
 }
 
 .p-type {
+  padding-bottom: 100px;
   &__list {
     @include g.grid_autofill(350px);
     gap: 30px;

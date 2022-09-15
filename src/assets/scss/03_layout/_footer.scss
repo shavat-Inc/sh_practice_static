@@ -1,5 +1,13 @@
 @use "../glb" as g;
 
 .l-footer {
-  position: relative;
+  background: #0a0a0a;
+  text-align: center;
+  height: 40px;
+  @include g.f-c;
+  color: #fff;
+  &__small {
+    font-size: 1.2rem;
+    color: #a1a1a1;
+  }
 }
