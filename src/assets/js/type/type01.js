@@ -3,8 +3,8 @@
 // 枠線のみの箱がぐるぐる
 function init() {
   // サイズを指定
-  const width = 800;
-  const height = 800;
+  const width = window.innerWidth;
+  const height = window.innerHeight;
 
   // レンダラーを作成
   const canvasElement = document.querySelector('#myCanvas')
@@ -60,4 +60,17 @@ controls.dampingFactor = 0.05;
     renderer.render(scene, camera); // レンダリング
     requestAnimationFrame(tick);
   }
+  function onResize() {
+    // レンダラーのサイズを調整する
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(width, height);
+
+    // カメラのアスペクト比を正す
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+  }
+    // 初期化のために実行
+    onResize();
+    // リサイズイベント発生時に実行
+    window.addEventListener('resize', onResize);
 }

@@ -2,9 +2,8 @@
 
 .l-main {
   position: relative;
-  &__section01 {
-    max-width: 1200px;
-    width: 90%;
-    @include g.marginAuto;
+  &--top {
+    background: #1e1e1e;
+    min-height: 100vh;
   }
 }

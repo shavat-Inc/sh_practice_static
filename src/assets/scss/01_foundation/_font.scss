@@ -22,3 +22,11 @@
   src: url('../font/SB_SourceHanSansJP-Bold.woff') format('woff');
   font-display: swap;
 }
+
+@font-face {
+  font-family: "Roboto-MediumItalic";
+  src: url("../font/Roboto-MediumItalic.ttf");
+  src: url("../font/Roboto-MediumItalic.woff") format("woff");
+  src: url("../font/Roboto-MediumItalic.woff2") format("woff2");
+  font-display: swap;
+}

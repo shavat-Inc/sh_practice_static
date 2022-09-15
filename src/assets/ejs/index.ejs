@@ -1,7 +1,40 @@
 <%- include('./template/_header', { page: json['home'] }); %>
-  <main class="main">
-    <div class="p-canvas">
-      <canvas id="myCanvas"></canvas>
+  <main class="l-main l-main--top">
+    <div class="l-mv u-mb30">
+      <div class="l-mv__inner">
+        <h2 class="l-mv__ttl">ポートフォリオ</h2>
+        <p class="l-mv__txt">- portfolio -</p>
+      </div>
+      <canvas width="1920" height="250" id="mv-canvas" class="l-mv__canvas"></canvas>
+    </div>
+    <div class="p-type">
+      <ul class="p-type__list">
+        <li class="p-type-item">
+          <div class="p-type-item__img">
+            <img src="./images/type01_thum.jpg" alt="">
+          </div>
+          <div class="p-type-item__box">
+            <h2 class="p-type-item__ttl">フレームランダム配置</h2>
+          </div>
+          <a href="./type/type01.html" class="p-type-item__link"></a>
+        </li>
+        <li class="p-type-item">
+          <div class="p-type-item__img">
+            <img src="./images/noimage.png" alt="">
+          </div>
+          <div class="p-type-item__box">
+            <h2 class="p-type-item__ttl">----</h2>
+          </div>
+        </li>
+        <li class="p-type-item">
+          <div class="p-type-item__img">
+            <img src="./images/noimage.png" alt="">
+          </div>
+          <div class="p-type-item__box">
+            <h2 class="p-type-item__ttl">----</h2>
+          </div>
+        </li>
+      </ul>
     </div>
   </main>
 <%- include( './template/_footer' ); %>

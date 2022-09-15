@@ -30,6 +30,16 @@ $breakpoints: (
 @mixin SourceHanSansJP_Regular {
   font-family: 'SourceHanSansJP-Regular',YuGothic, '游ゴシック', 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic ProN', メイリオ, Meiryo, 'ＭＳ Ｐゴシック', sans-serif;
 }
+@mixin SourceHanSansJP_Bold {
+  font-family: 'SourceHanSansJP-Bold',YuGothic, '游ゴシック', 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic ProN', メイリオ, Meiryo, 'ＭＳ Ｐゴシック', sans-serif;
+}
+@mixin SourceHanSansJP_Medium {
+  font-family: 'SourceHanSansJP-Medium',YuGothic, '游ゴシック', 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic ProN', メイリオ, Meiryo, 'ＭＳ Ｐゴシック', sans-serif;
+}
+
+@mixin RobotoMediumItalic {
+  font-family: "Roboto-MediumItalic", sans-serif;
+}
 
 //---------------------------------------------
 // レイアウトBOX
@@ -83,6 +93,9 @@ $breakpoints: (
 	}
 	@else if $transition==cb {
     transition: color .3s ease,background .3s ease;
+	}
+	@else if $transition==bc {
+    transition: border-color .3s ease;
 	}
 }
 
@@ -227,4 +240,12 @@ $breakpoints: (
 	} @else if ($direction == bottom) {
     border-color: $color $color transparent transparent;
 	}
+}
+
+//---------------------------------------------
+// grid-template-columns
+//---------------------------------------------
+@mixin grid_autofill($min,$max:1fr) {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax($min, $max));
 }

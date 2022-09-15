@@ -6,7 +6,12 @@
   },
 
   "home": {
-    "title": "",
+    "title": "ポートフォリオ",
+    "description": "",
+    "canonical": "http://example.com/"
+  },
+  "type01": {
+    "title": "フレームランダム配置",
     "description": "",
     "canonical": "http://example.com/"
   }
