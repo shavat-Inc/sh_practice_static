@@ -1,3 +1,5 @@
+// mvパーティクル--------------------------------------
+
 // Stageオブジェクトを作成します。表示リストのルートになります。
 stage = new createjs.Stage("mv-canvas");
 
@@ -66,3 +68,35 @@ function handleTick() {
   // 描画を更新する
   stage.update();
 }
+
+// マウスストーカー--------------------------------------
+
+//カーソル要素
+var cursor=$(".js-mouse-cursor");
+//ストーカー要素
+var stalker=$(".js-mouse-bg");
+
+$(document).on("mousemove",function(e){
+  var x=e.clientX;
+  var y=e.clientY;
+  cursor.css({
+    "top":y+"px",
+    "left":x+"px"
+  });
+  setTimeout(function(){
+    stalker.css({
+      "top":y+"px",
+      "left":x+"px"
+    });
+  });
+});
+
+$("a").on('mouseenter', function () {
+  cursor.addClass('is-active');
+  stalker.addClass('is-active');
+});
+
+$("a").on('mouseleave', function () {
+  cursor.removeClass('is-active');
+  stalker.removeClass('is-active');
+});

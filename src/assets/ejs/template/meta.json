@@ -11,8 +11,9 @@
     "canonical": "http://example.com/"
   },
   "type01": {
-    "title": "フレームランダム配置",
-    "description": "",
-    "canonical": "http://example.com/"
+    "title": "フレームランダム配置"
+  },
+  "type02": {
+    "title": "天体パーティクルとカプセルスフィア"
   }
 }

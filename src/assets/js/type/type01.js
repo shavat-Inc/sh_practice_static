@@ -1,12 +1,22 @@
+ // FPS==============================
+var stats = new Stats();
+stats.showPanel(0);
+Object.assign(stats.dom.style, {
+  'position': 'fixed',
+  'height': 'max-content',
+  'left': 'auto',
+  'right': '0',
+  'top': 'auto',
+  'bottom': '0'
+});
+document.body.appendChild( stats.dom );
+
+ // WebGL==============================
  // ページの読み込みを待つ
- window.addEventListener('DOMContentLoaded', init);
-// 枠線のみの箱がぐるぐる
+window.addEventListener('DOMContentLoaded', init);
 function init() {
-  // サイズを指定
   const width = window.innerWidth;
   const height = window.innerHeight;
-
-  // レンダラーを作成
   const canvasElement = document.querySelector('#myCanvas')
   const renderer = new THREE.WebGLRenderer({
     canvas: canvasElement,
@@ -18,7 +28,6 @@ function init() {
   // シーンを作成
   const scene = new THREE.Scene();
 
-
   // フォグを設定
   scene.fog = new THREE.Fog(0x000000, 50, 2000);
 
@@ -26,11 +35,11 @@ function init() {
   const camera = new THREE.PerspectiveCamera(45, width / height);
   camera.position.set(0, 0, 1000);
 
-// カメラコントローラーを作成
-const controls = new THREE.OrbitControls(camera, canvasElement);
-// 滑らかにカメラコントローラーを制御する
-controls.enableDamping = true;
-controls.dampingFactor = 0.05;
+  // カメラコントローラーを作成
+  const controls = new THREE.OrbitControls(camera, canvasElement);
+  // 滑らかにカメラコントローラーを制御する
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.05;
 
   // グループを作成
   const group = new THREE.Group();
@@ -49,17 +58,19 @@ controls.dampingFactor = 0.05;
   }
   scene.add(group);
 
-  // 毎フレーム時に実行されるループイベントです
-  tick();
-
   function tick() {
+    //FPS監視開始
+    stats.begin();
     // グループを回す
     group.rotateY(0.001);
-      // カメラコントローラーを更新
+    // カメラコントローラーを更新
     controls.update();
     renderer.render(scene, camera); // レンダリング
+    //FPS監視終了
+    stats.end();
     requestAnimationFrame(tick);
   }
+  tick();
   function onResize() {
     // レンダラーのサイズを調整する
     renderer.setPixelRatio(window.devicePixelRatio);
@@ -74,3 +85,6 @@ controls.dampingFactor = 0.05;
     // リサイズイベント発生時に実行
     window.addEventListener('resize', onResize);
 }
+
+
+
