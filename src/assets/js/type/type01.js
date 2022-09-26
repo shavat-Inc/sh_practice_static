@@ -15,15 +15,12 @@ document.body.appendChild( stats.dom );
  // ページの読み込みを待つ
 window.addEventListener('DOMContentLoaded', init);
 function init() {
-  const width = window.innerWidth;
-  const height = window.innerHeight;
   const canvasElement = document.querySelector('#myCanvas')
   const renderer = new THREE.WebGLRenderer({
     canvas: canvasElement,
     antialias: true,
     devicePixelRatio: window.devicePixelRatio,
   });
-  renderer.setSize(width, height);
   
   // シーンを作成
   const scene = new THREE.Scene();
@@ -71,8 +68,11 @@ function init() {
     requestAnimationFrame(tick);
   }
   tick();
+  
+  // レンダラーのリサイズ
   function onResize() {
-    // レンダラーのサイズを調整する
+    const width = window.innerWidth;
+    const height = window.innerHeight;
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(width, height);
 

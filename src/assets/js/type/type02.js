@@ -15,15 +15,12 @@ document.body.appendChild( stats.dom );
 // ページの読み込みを待つ
 window.addEventListener('DOMContentLoaded', init);
 function init() {
-  const width = window.innerWidth;
-  const height = window.innerHeight;
   const canvas = document.querySelector('#myCanvas');
   const renderer = new THREE.WebGLRenderer({
     canvas: canvas,
     antialias: true,
     devicePixelRatio: window.devicePixelRatio,
   });
-  renderer.setSize(width, height);
 
   // シーンを作成-------------------------------
   const scene = new THREE.Scene();
@@ -31,7 +28,7 @@ function init() {
   // フォグを設定-------------------------------
   scene.fog = new THREE.Fog(0x000000, 50, 2000);
   // カメラを作成-------------------------------
-  const camera = new THREE.PerspectiveCamera(45, width / height);
+  const camera = new THREE.PerspectiveCamera(45, 1.0);
   camera.position.set(0, 0, 100);
 
   // カメラコントローラーを作成-------------------------------
@@ -147,6 +144,8 @@ function init() {
 
   // レンダラーのリサイズ
   function onResize() {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(width, height);
 

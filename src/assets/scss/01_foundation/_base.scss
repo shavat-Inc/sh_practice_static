@@ -11,6 +11,10 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+.l-body--type {
+  overflow: hidden;
+}
+
 a {
   text-decoration: none;
 }
