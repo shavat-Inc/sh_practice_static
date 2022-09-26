@@ -12,7 +12,7 @@
     @include g.f-c;
     flex-direction: column;
     position: relative;
-    z-index: 1;
+    z-index: 2;
   }
   &__ttl {
     @include g.fontHeight(3rem,2);
@@ -26,5 +26,9 @@
     background: #0a0a0a;
     @include g.absolute_full;
     z-index: 0;
+  }
+  &__bg {
+    @include g.absolute_full;
+    z-index: 1;
   }
 }
