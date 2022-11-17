@@ -1,4 +1,4 @@
- // FPS==============================
+// FPS==============================
 var stats = new Stats();
 stats.showPanel(0);
 Object.assign(stats.dom.style, {
@@ -11,14 +11,15 @@ Object.assign(stats.dom.style, {
 });
 document.body.appendChild( stats.dom );
 
- // WebGL==============================
- // ページの読み込みを待つ
+// WebGL==============================
+// ページの読み込みを待つ
 window.addEventListener('DOMContentLoaded', init);
 function init() {
   const canvasElement = document.querySelector('#myCanvas')
   const renderer = new THREE.WebGLRenderer({
     canvas: canvasElement,
     antialias: true,
+    alpha: true,
     devicePixelRatio: window.devicePixelRatio,
   });
   
@@ -30,7 +31,7 @@ function init() {
 
   // カメラを作成
   const camera = new THREE.PerspectiveCamera(45, 1.0);
-  camera.position.set(0, 0, 1000);
+  camera.position.set(0, 0, 300);
 
   // カメラコントローラーを作成
   const controls = new THREE.OrbitControls(camera, canvasElement);
@@ -39,31 +40,40 @@ function init() {
   controls.dampingFactor = 0.05;
 
   // グループを作成
-  const group = new THREE.Group();
-  const geometry = new THREE.BoxBufferGeometry(50, 50, 50);
+  const geometry = new THREE.BoxGeometry(10, 10, 10);
   const edges = new THREE.EdgesGeometry( geometry );
-  for (let i = 0; i < 150; i++) {
-    const line = new THREE.LineSegments( edges, new THREE.LineBasicMaterial( { color: 0x31c5d8 } ) );
-    line.position.x = (Math.random() - 0.5) * 2000;
-    line.position.y = (Math.random() - 0.5) * 2000;
-    line.position.z = (Math.random() - 0.5) * 2000;
+  // 範囲
+  const range = 1000;
+  // 数
+  const count = 150;
+  const lineArray = [];
+  for (let i = 0; i < count; i++) {
+    const line = new THREE.LineSegments( edges, new THREE.LineBasicMaterial( { color: 0x309229 } ) );
+    line.position.x = (Math.random() - 0.5) * range;
+    line.position.y = (Math.random() - 0.5) * range;
+    line.position.z = (Math.random() - 0.5) * range;
     line.rotation.x = Math.random() * 3 * Math.PI;
     line.rotation.y = Math.random() * 3 * Math.PI;
     line.rotation.z = Math.random() * 3 * Math.PI;
-    // グループに格納する
-    group.add(line);
+    lineArray.push(line);
+    scene.add(line);
   }
-  scene.add(group);
+
+  const clock = new THREE.Clock();
 
   function tick() {
-    //FPS監視開始
     stats.begin();
-    // グループを回す
-    group.rotateY(0.001);
+    let item = lineArray.length;
+    let elapseTime = clock.getElapsedTime();
+    while(item--) {
+      let x = lineArray[item].position.z;
+      lineArray[item].rotation.z +=0.01;
+      lineArray[item].rotation.y +=0.01;
+      lineArray[item].position.y =Math.sin(elapseTime + x) * 100;
+    }
     // カメラコントローラーを更新
     controls.update();
-    renderer.render(scene, camera); // レンダリング
-    //FPS監視終了
+    renderer.render(scene, camera); 
     stats.end();
     requestAnimationFrame(tick);
   }
@@ -75,14 +85,11 @@ function init() {
     const height = window.innerHeight;
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(width, height);
-
     // カメラのアスペクト比を正す
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
   }
-  // 初期化のために実行
   onResize();
-  // リサイズイベント発生時に実行
   window.addEventListener('resize', onResize);
 }
 

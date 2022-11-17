@@ -1,3 +1,21 @@
+// 注意点---------------------------------------
+// 煙の画像のライセンスに注意
+
+ // style==============================
+const parentStyle = document.querySelector('.js-canvas-parent');
+const elementStyle = document.querySelector('.js-canvas');
+Object.assign(parentStyle.style,{
+  minHeight:"100vh",
+  background:"#000",
+  display:"flex",
+  alignItems:"center",
+  justifyContent:"center",
+});
+Object.assign(elementStyle.style,{
+  borderTop:"1px solid #5050505c",
+  borderBottom:"1px solid #5050505c",
+});
+
  // FPS==============================
 var stats = new Stats();
 stats.showPanel(0);
@@ -11,125 +29,80 @@ Object.assign(stats.dom.style, {
 });
 document.body.appendChild( stats.dom );
 
- // WebGL==============================
-// ページの読み込みを待つ
+// WebGL==============================
 window.addEventListener('DOMContentLoaded', init);
 function init() {
-  const width = window.innerWidth;
-  const height = window.innerHeight;
-  const canvas = document.querySelector('#myCanvas');
+  const canvasElement = document.querySelector('#myCanvas');
   const renderer = new THREE.WebGLRenderer({
-    canvas: canvas,
+    canvas: canvasElement,
     antialias: true,
     devicePixelRatio: window.devicePixelRatio,
   });
-  renderer.setSize(width, height);
-
-  // シーンを作成
+  //シーン
   const scene = new THREE.Scene();
-  // フォグを設定
-  scene.fog = new THREE.Fog(0x000000, 50, 2000);
-  // カメラを作成
-  const camera = new THREE.PerspectiveCamera(45, width / height);
+  //カメラ
+  const camera = new THREE.PerspectiveCamera( 25, 1.0, 1, 1000 );
   camera.position.set(0, 0, 1000);
+  scene.add(camera);
+  // ライト
+  const light = new THREE.DirectionalLight(0xffffff,0.8);
+  light.position.set(-1,0,1);
+  scene.add(light);
 
-  // カメラコントローラーを作成
-  const controls = new THREE.OrbitControls(camera, canvas);
-  // 滑らかにカメラコントローラーを制御する
-  controls.enableDamping = true;
-  controls.dampingFactor = 0.05;
+  // スモークのテクスチャ
+  const smokeLoader = new THREE.TextureLoader();
+  const smokeTexture = smokeLoader.load('../images/Smoke-Element.png');
 
- // 星屑を作成
- //canvasにテクスチャを作成
-  function generate() {
-        
-  //canvasで小さい丸の作成
-  const canvas = document.createElement('canvas');
-  canvas.width = 16;
-  canvas.height = 16;
-  const context = canvas.getContext('2d');
-  const gradient = context.createRadialGradient(canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, canvas.width / 2);
-  gradient.addColorStop(0, 'rgba(255,255,255,1)');
-  gradient.addColorStop(0.1, 'rgba(170,248,255,0.3)');
-  gradient.addColorStop(0.2, 'rgba(0,37,97,1)');
-  gradient.addColorStop(1, 'rgba(0,0,0,1)');
-  context.fillStyle = gradient;
-  context.fillRect(0, 0, canvas.width, canvas.height);
-  const texture = new THREE.Texture(canvas);
-  texture.needsUpdate = true;
-  return texture;
-}
-
-
-  function createStarField() {
-    // 頂点情報を格納する配列
-    const vertices = [];
-
-    // 配置する範囲
-    const SIZE = 2000;
-    // 配置する個数
-    const LENGTH = 1000;
-
-    for (let i = 0; i < LENGTH; i++) {
-      const x = SIZE * (Math.random() - 0.5);
-      const y = SIZE * (Math.random() - 0.5);
-      const z = SIZE * (Math.random() - 0.5);
-
-      vertices.push(x, y, z);
-    }
-
-    // 形状データを作成
-    const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
-
-    // マテリアルを作成
-    const material = new THREE.PointsMaterial({
-      size: 20,
-      color: 0xfffffff,
-      map: generate(),
-    });
-
-    // 物体を作成
-    const mesh = new THREE.Points(geometry, material);
-    scene.add(mesh);
+  // スモークのジオメトリ、マテリアル
+  const smokeGeo = new THREE.PlaneGeometry(400,400);
+  const smokeMaterial = new THREE.MeshLambertMaterial({color: 0x3caacc, map: smokeTexture,opacity: 1, transparent: true});
+  const smokeParticles = [];
+  for (let i = 0; i < 100; i++) {
+    const particle = new THREE.Mesh(smokeGeo,smokeMaterial);
+      particle.position.x = (Math.random() - 0.5) * 2000;
+      particle.position.y = (Math.random() - 0.5) * 900;
+      particle.rotation.z = Math.random() * 360;
+      smokeParticles.push(particle);
+      scene.add(particle);
   }
-  
-  createStarField();
 
-  let rot = 0;
-  // アニメ―ション
-  function animationStart() {
-    //FPS監視開始
+  const dolphinGeo = new THREE.PlaneGeometry(500,500);
+  THREE.ImageUtils.crossOrigin = ''; 
+  const dolphinTexture = smokeLoader.load('../images/dolphin.png');
+  const dolphinMaterial = new THREE.MeshLambertMaterial({color: 0x3caacc, opacity: 1, map: dolphinTexture, transparent: true, blending: THREE.AdditiveBlending})
+  const dolphin = new THREE.Mesh(dolphinGeo,dolphinMaterial);
+  scene.add(dolphin);
+
+  var clock = new THREE.Clock();
+  function tick() {
     stats.begin();
-    rot += 0.009; // 毎フレーム角度を0.5度ずつ足していく
-    // ラジアンに変換する
-    const radian = (rot * Math.PI) / 180;
-    // 角度に応じてカメラの位置を設定
-    camera.position.x = 1000 * Math.sin(radian);
-    camera.position.z = 1000 * Math.cos(radian);
-    // // カメラコントローラーを更新
-    // controls.update();
-    // 原点方向を見つめる
-    camera.lookAt(new THREE.Vector3(0, 0, 0));
-
-    // レンダリング
+    delta = clock.getDelta();
+    evolveSmoke();
     renderer.render(scene, camera);
     stats.end();
-    requestAnimationFrame(animationStart);
+    requestAnimationFrame(tick);
   }
-  animationStart();
+  tick(); 
 
-  // レンダラーのサイズを調整する
+  function evolveSmoke() {
+    var sp = smokeParticles.length;
+    while(sp--) {
+        smokeParticles[sp].rotation.z += (delta * 0.1);
+    }
+  }
+  // レンダラーのリサイズ
   function onResize() {
+    const width = window.innerWidth;
+    const height = window.innerHeight / 2;
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(width, height);
-
     // カメラのアスペクト比を正す
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
   }
-    // 初期化のために実行
-    onResize();
-    // リサイズイベント発生時に実行
-    window.addEventListener('resize', onResize);
+  onResize();
+  window.addEventListener('resize', onResize);
 }
+
+
+
