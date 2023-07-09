@@ -1,0 +1,38 @@
+<%- include('../template/_header_type', { page: json['type05'] }); %>
+<!-- シェーダー用 -->
+  <main class="main js-canvas-parent">
+    <canvas id="myCanvas" class="js-canvas p-canvas"></canvas>
+  </main>
+  <footer class="footer">
+  </footer>
+	<script id="js-vertexShader" type="x-shader/x-vertex">
+    uniform mat4 projectionMatrix;
+    uniform mat4 viewMatrix;
+    uniform mat4 modelMatrix;
+
+    attribute vec3 position;
+
+    void main(){
+        gl_Position = projectionMatrix * modelMatrix * viewMatrix * vec4(position,1.0);
+    }
+  </script>
+  
+  <script id="js-fragmentShader" type="x-shader/x-fragment">
+    precision mediump float;
+      void main(){
+          gl_FragColor = vec4(1.0, 1.0, 0.0, 1.0);
+      }
+  </script>
+  <style>
+    body {
+      background: rgb(51, 51, 51);
+      overflow-y: scroll !important;
+    }
+  </style>
+  <script src="../js/jquery-3.5.1.min.js"></script>
+  <script src="../js/stats.js"></script>
+  <script src="../js/three.min.js"></script>
+  <script src="../js/OrbitControls.js"></script>
+  <script src="../js/type/type06.js"></script>
+  </body>
+  </html>
