@@ -1,68 +1,72 @@
-// mvパーティクル--------------------------------------
-new FinisherHeader({
-  "count": 9,
-  "size": {
-    "min": 480,
-    "max": 795,
-    "pulse": 0.5
-  },
-  "speed": {
-    "x": {
-      "min": 0.1,
-      "max": 1.0
-    },
-    "y": {
-      "min": 0.1,
-      "max": 0.6
+$(document).ready(function () {
+  // 検索フォームの送信イベント
+  $("#search-form").submit(function (event) {
+    event.preventDefault(); // ページリロードを防ぐ
+
+    const keyword = escapeHTML($("#search-keyword").val()); // キーワードを取得しエスケープ
+
+    if (keyword) {
+      // search.htmlにリダイレクトし、クエリパラメータにキーワードを追加
+      window.location.href =
+        "/search_test/search/search.html?keyword=" +
+        encodeURIComponent(keyword);
     }
-  },
-  "colors": {
-    "background": "#1a1a1a",
-    "particles": [
-      "#2062a2",
-      "#888888",
-      "#888888"
-    ]
-  },
-  "blending": "overlay",
-  "opacity": {
-    "center": 0.5,
-    "edge": 0.05
-  },
-  "skew": 0,
-  "shapes": [
-    "c"
-  ]
-});
-
-// マウスストーカー--------------------------------------
-
-//カーソル要素
-var cursor=$(".js-mouse-cursor");
-//ストーカー要素
-var stalker=$(".js-mouse-bg");
-
-$(document).on("mousemove",function(e){
-  var x=e.clientX;
-  var y=e.clientY;
-  cursor.css({
-    "top":y+"px",
-    "left":x+"px"
   });
-  setTimeout(function(){
-    stalker.css({
-      "top":y+"px",
-      "left":x+"px"
-    });
+
+  // 現在のページがsearch.htmlか確認
+  if (location.href.indexOf("/search/") != -1) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const keyword = escapeHTML(urlParams.get("keyword")); // URLからキーワードを取得
+
+    if (keyword) {
+      $.ajax({
+        type: "GET",
+        url: "/search_test/js/search-data.json", // 静的なJSONファイルのパス
+        dataType: "json",
+      }).then(
+        function (data) {
+          $("h1.ja").html("「" + keyword + "」の検索結果");
+          $(".post_list").empty(); // 前の検索結果をクリア
+          let found = false;
+          for (let i in data) {
+            const cur_data = data[i];
+            if (
+              cur_data.post_title.indexOf(keyword) != -1 ||
+              cur_data.post_content.indexOf(keyword) != -1
+            ) {
+              $(".post_list").append(cur_data.html.replace(/\\/g, ""));
+              found = true;
+            }
+          }
+          if (!found) {
+            $(".post_list").append(
+              '<p style="margin: 0 0 0 1.5em; font-size: 14px;">見つかりませんでした。</p>'
+            );
+          }
+        },
+        function () {
+          console.log("検索失敗");
+        }
+      );
+    }
+  }
+});
+
+// HTMLエスケープ関数
+function escapeHTML(str) {
+  return str.replace(/[&<>"']/g, function (match) {
+    const escape = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;",
+    };
+    return escape[match];
   });
-});
+}
 
-$("a").on('mouseenter', function () {
-  cursor.addClass('is-active');
-  stalker.addClass('is-active');
-});
-
-$("a").on('mouseleave', function () {
-  cursor.removeClass('is-active');
-  stalker.removeClass('is-active');
-});
+// アイコンを追加する関数 (必要に応じて)
+function addNewIcon() {
+  console.log("New icon added");
+}

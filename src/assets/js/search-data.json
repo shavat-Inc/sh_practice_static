@@ -1,0 +1,14 @@
+[
+  {
+    "post_title": "article01の記事",
+    "post_content": "サンプルコンテンツ1",
+    "html": "<div class='post_col'><a href='/search_test/article/article01.html'>article01の記事</a></div>",
+    "post_link": "/search_test/article/article01.html"
+  },
+  {
+    "post_title": "サンプル記事2",
+    "post_content": "サンプルコンテンツ2",
+    "html": "<div class='post_col'><a href='/search_test/sample2.html'>サンプル記事2</a></div>",
+    "post_link": "/search_test/sample2.html"
+  }
+]
